@@ -1,0 +1,20 @@
+trigger:
+  - develop
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  name: deployment_token
+  value: 7df78e0e982f2d945c460d25622ead2d6d50d5efe2e250d0c3607562a66e28b42-f00ced44-2b46-408c-b0ef-92ceaf9da42200f60286
+
+steps:
+  - checkout: self
+    submodules: true
+  - task: AzureStaticWebApp@0
+    inputs:
+      app_location: "src" # App source code path relative to cwd
+      api_location: "api" # Api source code path relative to cwd
+      output_location: "dist" # Built app content directory relative to app_location - optional
+      # cwd: "$(System.DefaultWorkingDirectory)/myapp" # Working directory - optional
+      azure_static_web_apps_api_token: $(deployment_token)
